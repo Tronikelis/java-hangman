@@ -1,4 +1,8 @@
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +16,7 @@ enum GameState {
 }
 
 class Hangman {
-    private String word = "copium";
+    private String word;
     private ArrayList<Character> guesses = new ArrayList<>();
 
     private void clearTerminal() {
@@ -26,6 +30,8 @@ class Hangman {
         BufferedReader stdinReader = new BufferedReader(new InputStreamReader(System.in));
 
         while (ch.compareTo('\0') == 0) {
+            printGuesses();
+            printBoard();
             System.out.println("Enter a character: ");
 
             String input = stdinReader.readLine().trim();
@@ -33,9 +39,6 @@ class Hangman {
             if (input.length() == 1) {
                 if (guesses.contains(input.charAt(0))) {
                     System.out.println("This character was already guessed! Try another one.");
-                    printGuesses();
-                    printBoard();
-//                    ch = '\0';
                     continue;
                 }
 
@@ -43,9 +46,7 @@ class Hangman {
                 break;
             }
 
-            System.out.println("Invalid input. Please enter only one character.");
-            printGuesses();
-            printBoard();
+            System.out.println("Invalid input. Please enter only one character.\n");
         }
 
         return ch;
@@ -79,6 +80,12 @@ class Hangman {
         System.out.println();
     }
 
+    private String getRandomWordFromFile(String filePath) throws IOException {
+        List<String> lines = Files.readAllLines(Paths.get(filePath));
+        Random random = new Random();
+        return lines.get(random.nextInt(lines.size()));
+    }
+
     private GameState didEnd() {
         for (Character ch : word.toCharArray()) {
             if (guesses.indexOf(ch) == -1) {
@@ -90,16 +97,16 @@ class Hangman {
     }
 
     public void init() throws IOException {
+        this.word = getRandomWordFromFile("words.txt");
+
         while (true) {
             if (didEnd() == GameState.WIN) {
-                System.out.println("you won, congrats man");
+                System.out.println("\nYou won, congrats man");
+                System.out.println("The word was: " + this.word);
                 return;
             }
 
             clearTerminal();
-
-            printGuesses();
-            printBoard();
 
             guesses.add(getChar());
         }
