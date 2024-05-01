@@ -76,7 +76,7 @@ class Hangman {
 
             System.out.printf(" ", ch);
         }
-        System.out.println("");
+        System.out.println();
     }
 
     private GameState didEnd() {
