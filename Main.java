@@ -11,13 +11,24 @@ import java.io.InputStreamReader;
 enum GameState {
     GAMER,
     WIN,
-    // this doesnt do anything
     LOSE,
 }
 
 class Hangman {
     private String word;
     private ArrayList<Character> guesses = new ArrayList<>();
+
+    private String[] hangmanStages = {
+            "  +-----+\n  |     |\n        |\n        |\n        |\n        |\n========",
+            "  +-----+\n  |     |\n  O     |\n        |\n        |\n        |\n========",
+            "  +-----+\n  |     |\n  O     |\n  |     |\n        |\n        |\n========",
+            "  +-----+\n  |     |\n  O     |\n /|     |\n        |\n        |\n========",
+            "  +-----+\n  |     |\n  O     |\n /|\\    |\n        |\n        |\n========",
+            "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n        |\n========",
+            "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n /      |\n========",
+            "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n / \\   |\n========",
+            "  +-----+\n  |     |\n [O]    |\n /|\\    |\n  |     |\n / \\   |\n========"
+    };
 
     private void clearTerminal() {
         System.out.print("\033[H\033[2J");
@@ -32,6 +43,7 @@ class Hangman {
         while (ch.compareTo('\0') == 0) {
             printGuesses();
             printBoard();
+
             System.out.println("Enter a character: ");
 
             String input = stdinReader.readLine().trim();
@@ -80,13 +92,29 @@ class Hangman {
         System.out.println();
     }
 
+    private void printTheMan() {
+        Integer index = 0;
+
+        for (Character guess : guesses) {
+            if (word.indexOf(guess) == -1) {
+                index++;
+            }
+        }
+
+        System.out.println(hangmanStages[index]);
+    }
+
     private String getRandomWordFromFile(String filePath) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filePath));
         Random random = new Random();
         return lines.get(random.nextInt(lines.size()));
     }
 
-    private GameState didEnd() {
+    private GameState getGameState() {
+        if (guesses.size() >= hangmanStages.length) {
+            return GameState.LOSE;
+        }
+
         for (Character ch : word.toCharArray()) {
             if (guesses.indexOf(ch) == -1) {
                 return GameState.GAMER;
@@ -100,13 +128,22 @@ class Hangman {
         this.word = getRandomWordFromFile("words.txt");
 
         while (true) {
-            if (didEnd() == GameState.WIN) {
+            GameState gameState = getGameState();
+
+            if (gameState == GameState.WIN) {
                 System.out.println("\nYou won, congrats man");
                 System.out.println("The word was: " + this.word);
                 return;
             }
 
+            if (gameState == GameState.LOSE) {
+                System.out.println("\nYou lost, lol");
+                System.out.println("The word was: " + this.word);
+                return;
+            }
+
             clearTerminal();
+            printTheMan();
 
             guesses.add(getChar());
         }
