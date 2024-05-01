@@ -26,8 +26,8 @@ class Hangman {
             "  +-----+\n  |     |\n  O     |\n /|\\    |\n        |\n        |\n========",
             "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n        |\n========",
             "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n /      |\n========",
-            "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n / \\   |\n========",
-            "  +-----+\n  |     |\n [O]    |\n /|\\    |\n  |     |\n / \\   |\n========"
+            "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n / \\    |\n========",
+            "  +-----+\n  |     |\n [O]    |\n /|\\    |\n  |     |\n / \\    |\n========"
     };
 
     private void clearTerminal() {
@@ -99,6 +99,10 @@ class Hangman {
             if (word.indexOf(guess) == -1) {
                 index++;
             }
+        }
+
+        if (index >= hangmanStages.length) {
+            index = hangmanStages.length - 1;
         }
 
         System.out.println(hangmanStages[index]);
