@@ -27,7 +27,7 @@ class Hangman {
             "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n        |\n========",
             "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n /      |\n========",
             "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n / \\    |\n========",
-            "  +-----+\n  |     |\n [O]    |\n /|\\    |\n  |     |\n / \\    |\n========"
+            // " +-----+\n | |\n [O] |\n /|\\ |\n | |\n / \\ |\n========"
     };
 
     private void clearTerminal() {
@@ -92,7 +92,8 @@ class Hangman {
         System.out.println();
     }
 
-    private void printTheMan() {
+    private Integer getHangmanIndex() {
+
         Integer index = 0;
 
         for (Character guess : guesses) {
@@ -105,7 +106,11 @@ class Hangman {
             index = hangmanStages.length - 1;
         }
 
-        System.out.println(hangmanStages[index]);
+        return index;
+    }
+
+    private void printTheMan() {
+        System.out.println(hangmanStages[getHangmanIndex()]);
     }
 
     private String getRandomWordFromFile(String filePath) throws IOException {
@@ -115,7 +120,7 @@ class Hangman {
     }
 
     private GameState getGameState() {
-        if (guesses.size() >= hangmanStages.length) {
+        if (getHangmanIndex() >= hangmanStages.length - 1) {
             return GameState.LOSE;
         }
 
@@ -135,12 +140,18 @@ class Hangman {
             GameState gameState = getGameState();
 
             if (gameState == GameState.WIN) {
+                clearTerminal();
+                printTheMan();
+
                 System.out.println("\nYou won, congrats man");
                 System.out.println("The word was: " + this.word);
                 return;
             }
 
             if (gameState == GameState.LOSE) {
+                clearTerminal();
+                printTheMan();
+
                 System.out.println("\nYou lost, lol");
                 System.out.println("The word was: " + this.word);
                 return;
