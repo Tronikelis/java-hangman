@@ -31,11 +31,21 @@ class Hangman {
             String input = stdinReader.readLine().trim();
 
             if (input.length() == 1) {
+                if (guesses.contains(input.charAt(0))) {
+                    System.out.println("This character was already guessed! Try another one.");
+                    printGuesses();
+                    printBoard();
+//                    ch = '\0';
+                    continue;
+                }
+
                 ch = input.charAt(0);
                 break;
             }
 
             System.out.println("Invalid input. Please enter only one character.");
+            printGuesses();
+            printBoard();
         }
 
         return ch;
@@ -46,8 +56,7 @@ class Hangman {
             return;
         }
 
-        System.out.println("Your guesses:");
-
+        System.out.print("\nYour guesses: ");
         for (Character guess : guesses) {
             System.out.printf("%c ", guess);
         }
@@ -56,6 +65,7 @@ class Hangman {
     }
 
     private void printBoard() {
+        System.out.print("The word: ");
         for (Character ch : word.toCharArray()) {
             // is ch inside guesses?
             if (guesses.indexOf(ch) != -1) {
@@ -66,6 +76,7 @@ class Hangman {
 
             System.out.printf(" ", ch);
         }
+        System.out.println();
     }
 
     private GameState didEnd() {
