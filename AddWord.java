@@ -17,8 +17,13 @@ public class AddWord {
 
     public void init() throws IOException {
         Pattern pattern = Pattern.compile("[a-zA-Z]");
+
+        System.out.println();
+
         System.out.println("Write words to add, they can only contain english characters");
         System.out.println("Press enter without typing anything to exit");
+
+        System.out.println();
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String input = bufferedReader.readLine().trim();
@@ -34,6 +39,8 @@ public class AddWord {
         while (matcher.find()) {
             matched += matcher.group();
         }
+
+        matched = matched.toLowerCase();
 
         if (matched.compareToIgnoreCase(input) != 0) {
             System.out.println("invalid input");

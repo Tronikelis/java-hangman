@@ -7,11 +7,3 @@ gallery
 library
 journey
 phantom
-crystalvpshpx
-nice
-laba
-hello
-okay
-man
-nx
-bruh

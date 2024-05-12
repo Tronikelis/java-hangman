@@ -114,6 +114,8 @@ public class Hangman {
 
     private String getRandomWordFromFile(String filePath) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filePath));
+        lines.removeIf(l -> l.length() == 0);
+
         Random random = new Random();
         return lines.get(random.nextInt(lines.size()));
     }
