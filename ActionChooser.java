@@ -12,7 +12,6 @@ public class ActionChooser {
 
         System.out.println("1. [p]lay");
         System.out.println("2. [w]ords");
-        System.out.println("3. [l]eaderboard");
 
         BufferedReader stdinReader = new BufferedReader(new InputStreamReader(System.in));
         String input = stdinReader.readLine().trim();
@@ -27,8 +26,6 @@ public class ActionChooser {
                 return Action.PLAY;
             case 'w':
                 return Action.ADD_WORD;
-            case 'l':
-                return Action.SEE_LEADERBOARD;
             default:
                 System.out.println("don't know what you typed");
                 return choose();

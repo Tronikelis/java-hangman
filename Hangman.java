@@ -147,6 +147,7 @@ public class Hangman {
 
         while (true) {
             GameState gameState = getGameState();
+            Integer timeTaken = timeNowSeconds() - past;
 
             if (gameState == GameState.WIN) {
                 clearTerminal();
@@ -155,7 +156,13 @@ public class Hangman {
                 System.out.println("\nYou won, congrats man");
                 System.out.println("The word was: " + this.word);
 
-                pb.set(timeNowSeconds() - past);
+                if (timeTaken < pb.get() || pb.get() == 0) {
+                    System.out.println("NEW PB! " + timeTaken + "s");
+                    pb.set(timeNowSeconds() - past);
+                }
+
+                System.out.println("took " + timeTaken + "s");
+
                 return;
             }
 
@@ -165,6 +172,8 @@ public class Hangman {
 
                 System.out.println("\nYou lost, lol");
                 System.out.println("The word was: " + this.word);
+
+                System.out.println("took " + timeTaken + "s");
 
                 return;
             }
