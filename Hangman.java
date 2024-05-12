@@ -134,8 +134,16 @@ public class Hangman {
         return GameState.WIN;
     }
 
+    private Integer timeNowSeconds() {
+        Long now = System.currentTimeMillis() / 1000L;
+        return Integer.valueOf(now.intValue());
+    }
+
     public void init() throws IOException {
         this.word = getRandomWordFromFile("words.txt");
+
+        Integer past = timeNowSeconds();
+        PersonalBest pb = new PersonalBest();
 
         while (true) {
             GameState gameState = getGameState();
@@ -146,6 +154,8 @@ public class Hangman {
 
                 System.out.println("\nYou won, congrats man");
                 System.out.println("The word was: " + this.word);
+
+                pb.set(timeNowSeconds() - past);
                 return;
             }
 
@@ -155,6 +165,7 @@ public class Hangman {
 
                 System.out.println("\nYou lost, lol");
                 System.out.println("The word was: " + this.word);
+
                 return;
             }
 

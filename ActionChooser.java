@@ -4,7 +4,11 @@ import java.io.InputStreamReader;
 
 public class ActionChooser {
     public Action choose() throws IOException {
+        PersonalBest pb = new PersonalBest();
+
         System.out.println("HANGMAN:");
+
+        System.out.println("PB: " + pb.get().toString() + "s");
 
         System.out.println("1. [p]lay");
         System.out.println("2. [w]ords");
