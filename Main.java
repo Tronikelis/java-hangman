@@ -11,6 +11,11 @@ public class Main {
                 hangman.init();
                 break;
 
+            case ADD_WORD:
+                AddWord addWord = new AddWord();
+                addWord.init();
+                break;
+
             default:
                 break;
         }
