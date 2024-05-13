@@ -20,7 +20,7 @@ public class PersonalBest {
     public Integer get() throws IOException {
         String data = Files.readString(Path.of(FILENAME)).trim();
 
-        Integer pb = 0;
+        int pb = 0;
 
         try {
             pb = Integer.parseInt(data);

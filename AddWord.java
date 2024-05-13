@@ -28,7 +28,7 @@ public class AddWord {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String input = bufferedReader.readLine().trim();
 
-        if (input.length() == 0) {
+        if (input.isEmpty()) {
             return;
         }
 

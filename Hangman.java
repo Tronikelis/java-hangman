@@ -35,7 +35,7 @@ public class Hangman {
     }
 
     private Character getChar() throws IOException {
-        Character ch = Character.valueOf('\0');
+        Character ch = '\0';
 
         BufferedReader stdinReader = new BufferedReader(new InputStreamReader(System.in));
 
@@ -45,11 +45,16 @@ public class Hangman {
 
             System.out.println("Enter a character: ");
 
-            String input = stdinReader.readLine().trim();
+            String input = stdinReader.readLine().trim().toLowerCase();
 
             if (input.length() == 1) {
                 if (guesses.contains(input.charAt(0))) {
                     System.out.println("This character was already guessed! Try another one.");
+                    continue;
+                }
+
+                if (!Character.isLetter(input.charAt(0))) {
+                    System.out.println("Make sure that the input is an alphabetical character.");
                     continue;
                 }
 
@@ -64,7 +69,7 @@ public class Hangman {
     }
 
     private void printGuesses() {
-        if (guesses.size() == 0) {
+        if (guesses.isEmpty()) {
             return;
         }
 
@@ -80,7 +85,7 @@ public class Hangman {
         System.out.print("The word: ");
         for (Character ch : word.toCharArray()) {
             // is ch inside guesses?
-            if (guesses.indexOf(ch) != -1) {
+            if (guesses.contains(ch)) {
                 System.out.printf("%c", ch);
             } else {
                 System.out.printf("_", ch);
@@ -93,7 +98,7 @@ public class Hangman {
 
     private Integer getHangmanIndex() {
 
-        Integer index = 0;
+        int index = 0;
 
         for (Character guess : guesses) {
             if (word.indexOf(guess) == -1) {
@@ -114,7 +119,7 @@ public class Hangman {
 
     private String getRandomWordFromFile(String filePath) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filePath));
-        lines.removeIf(l -> l.length() == 0);
+        lines.removeIf(l -> l.isEmpty());
 
         Random random = new Random();
         return lines.get(random.nextInt(lines.size()));
@@ -126,7 +131,7 @@ public class Hangman {
         }
 
         for (Character ch : word.toCharArray()) {
-            if (guesses.indexOf(ch) == -1) {
+            if (!guesses.contains(ch)) {
                 return GameState.GAMER;
             }
         }
@@ -135,8 +140,8 @@ public class Hangman {
     }
 
     private Integer timeNowSeconds() {
-        Long now = System.currentTimeMillis() / 1000L;
-        return Integer.valueOf(now.intValue());
+        long now = System.currentTimeMillis() / 1000L;
+        return (int) now;
     }
 
     public void init() throws IOException {
@@ -147,7 +152,7 @@ public class Hangman {
 
         while (true) {
             GameState gameState = getGameState();
-            Integer timeTaken = timeNowSeconds() - past;
+            int timeTaken = timeNowSeconds() - past;
 
             if (gameState == GameState.WIN) {
                 clearTerminal();
