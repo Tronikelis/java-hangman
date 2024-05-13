@@ -144,8 +144,8 @@ public class Hangman {
         return (int) now;
     }
 
-    public void init() throws IOException {
-        this.word = getRandomWordFromFile("words.txt");
+    public void init(String filePath) throws IOException {
+        this.word = getRandomWordFromFile(filePath);
 
         Integer past = timeNowSeconds();
         PersonalBest pb = new PersonalBest();

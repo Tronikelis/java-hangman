@@ -8,7 +8,7 @@ public class Main {
         switch (action) {
             case PLAY:
                 Hangman hangman = new Hangman();
-                hangman.init();
+                hangman.init("words.txt"); // for difficulty based on words maybe
                 break;
 
             case ADD_WORD:
