@@ -88,10 +88,10 @@ public class Hangman {
             if (guesses.contains(ch)) {
                 System.out.printf("%c", ch);
             } else {
-                System.out.printf("_", ch);
+                System.out.print("_");
             }
 
-            System.out.printf(" ", ch);
+            System.out.print(" ");
         }
         System.out.println();
     }
