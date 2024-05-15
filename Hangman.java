@@ -162,11 +162,11 @@ public class Hangman {
                 System.out.println("The word was: " + this.word);
 
                 if (timeTaken < pb.get() || pb.get() == 0) {
-                    System.out.println("NEW PB! " + timeTaken + "s");
+                    System.out.println("NEW PB! " + timeTaken + "sec");
                     pb.set(timeNowSeconds() - past);
                 }
 
-                System.out.println("took " + timeTaken + "s");
+                System.out.println("took " + timeTaken + "sec");
 
                 return;
             }
@@ -178,7 +178,7 @@ public class Hangman {
                 System.out.println("\nYou lost, lol");
                 System.out.println("The word was: " + this.word);
 
-                System.out.println("took " + timeTaken + "s");
+                System.out.println("took " + timeTaken + "sec");
 
                 return;
             }
@@ -186,6 +186,44 @@ public class Hangman {
             clearTerminal();
             printTheMan();
 
+            guesses.add(getChar());
+        }
+    }
+    public void guessLongWord(String longWord) throws IOException {
+        this.word = longWord.toLowerCase();
+
+        Integer startTime = timeNowSeconds();
+        PersonalBest pb = new PersonalBest();
+
+        while (true) {
+            int currentTime = timeNowSeconds();
+            int elapsedTime = currentTime - startTime;
+            int remainingTime = 45 - elapsedTime;
+
+            if (remainingTime <= 0) {
+                clearTerminal();
+                System.out.println("Time is up bucko, you failed XD\n");
+                System.out.printf("Also the word was: " + this.word);
+                return;
+            }
+
+            GameState gameState = getGameState();
+
+            if (gameState == GameState.WIN) {
+                clearTerminal();
+                System.out.println("Congrats you're a certified asian.\n");
+                System.out.printf("Also the word was: " + this.word);
+                return;
+            }
+            if (gameState == GameState.LOSE) {
+                clearTerminal();
+                System.out.println("Nice try buddy, but you're not him\n");
+                System.out.printf("Also the word was: " + this.word);
+                return;
+            }
+            clearTerminal();
+            System.out.println("Time remaining: " + remainingTime + " seconds");
+            printTheMan();
             guesses.add(getChar());
         }
     }

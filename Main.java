@@ -16,6 +16,11 @@ public class Main {
                 addWord.init();
                 break;
 
+            case GUESS_LONG_WORD:
+                Hangman hangmanLongWord = new Hangman();
+                hangmanLongWord.guessLongWord("Equilibrium");
+                break;
+
             default:
                 break;
         }
