@@ -192,7 +192,15 @@ public class Hangman {
             printTheMan();
 
             if (this.action == Action.PLAY_HARD) {
-                System.out.println("time remaining: " + String.valueOf(45 - timeTaken) + "s");
+                int timeRemaining = 45 - timeTaken;
+
+                if (timeRemaining <= 0) {
+                    System.out.println("\nYou ran out of time");
+                    System.out.println("The word was: " + this.word);
+                    return;
+                }
+
+                System.out.println("time remaining: " + String.valueOf(timeRemaining) + "s");
             }
 
             guesses.add(getChar());
