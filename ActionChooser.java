@@ -12,7 +12,6 @@ public class ActionChooser {
 
         System.out.println("1. [p]lay");
         System.out.println("2. [w]ords");
-        System.out.println("3. [a]sian difficulty");
 
         BufferedReader stdinReader = new BufferedReader(new InputStreamReader(System.in));
         String input = stdinReader.readLine().trim();
@@ -25,7 +24,6 @@ public class ActionChooser {
         return switch (input.charAt(0)) {
             case 'p' -> Action.PLAY;
             case 'w' -> Action.ADD_WORD;
-            case 'a' -> Action.GUESS_LONG_WORD;
             default -> {
                 System.out.println("don't know what you typed");
                 yield choose();
