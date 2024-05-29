@@ -18,7 +18,7 @@ public class Main {
 
             case GUESS_LONG_WORD:
                 Hangman hangmanLongWord = new Hangman();
-                hangmanLongWord.guessLongWord("asian_difficulty_words.txt");
+                hangmanLongWord.guessLongWord("Equilibrium");
                 break;
 
             default:

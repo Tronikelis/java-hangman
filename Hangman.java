@@ -17,8 +17,6 @@ public class Hangman {
     private String word;
     private ArrayList<Character> guesses = new ArrayList<>();
 
-    private List<String> asianDifficultyWords = new ArrayList<>();
-    private Random random = new Random();
     private String[] hangmanStages = {
             "  +-----+\n  |     |\n        |\n        |\n        |\n        |\n========",
             "  +-----+\n  |     |\n  O     |\n        |\n        |\n        |\n========",
@@ -126,16 +124,6 @@ public class Hangman {
         Random random = new Random();
         return lines.get(random.nextInt(lines.size()));
     }
-    private String getRandomWordFromList(List<String> words) {
-        return words.get(random.nextInt(words.size()));
-    }
-    private void loadAsianDifficultyWords(String filePath) throws IOException {
-        asianDifficultyWords = Files.readAllLines(Paths.get(filePath));
-        asianDifficultyWords.removeIf(l->l.isEmpty());
-        for (int i = 0; i < asianDifficultyWords.size(); i++) {
-            asianDifficultyWords.set(i, asianDifficultyWords.get(i).toLowerCase());
-        }
-    }
 
     private GameState getGameState() {
         if (getHangmanIndex() >= hangmanStages.length - 1) {
@@ -201,9 +189,8 @@ public class Hangman {
             guesses.add(getChar());
         }
     }
-    public void guessLongWord(String filePath) throws IOException {
-        loadAsianDifficultyWords(filePath);
-        this.word = getRandomWordFromList(asianDifficultyWords);
+    public void guessLongWord(String longWord) throws IOException {
+        this.word = longWord.toLowerCase();
 
         Integer startTime = timeNowSeconds();
         PersonalBest pb = new PersonalBest();
