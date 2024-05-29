@@ -212,7 +212,6 @@ public class Hangman {
             if (gameState == GameState.WIN) {
                 clearTerminal();
                 System.out.println("Congrats you're a certified asian.\n");
-                System.out.printf("Also the word was: " + this.word);
                 return;
             }
             if (gameState == GameState.LOSE) {
