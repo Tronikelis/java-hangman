@@ -6,15 +6,23 @@ public class Main {
         Action action = actionChooser.choose();
 
         switch (action) {
-            case PLAY:
-                Hangman hangman = new Hangman();
+            case PLAY: {
+                Hangman hangman = new Hangman(action);
                 hangman.init("words.txt"); // for difficulty based on words maybe
                 break;
+            }
 
-            case ADD_WORD:
+            case PLAY_HARD: {
+                Hangman hangman = new Hangman(action);
+                hangman.init("hard_words.txt"); // for difficulty based on words maybe
+                break;
+            }
+
+            case ADD_WORD: {
                 AddWord addWord = new AddWord();
                 addWord.init();
                 break;
+            }
 
             default:
                 break;

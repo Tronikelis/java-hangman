@@ -16,6 +16,7 @@ enum GameState {
 public class Hangman {
     private String word;
     private ArrayList<Character> guesses = new ArrayList<>();
+    private Action action;
 
     private String[] hangmanStages = {
             "  +-----+\n  |     |\n        |\n        |\n        |\n        |\n========",
@@ -28,6 +29,10 @@ public class Hangman {
             "  +-----+\n  |     |\n  O     |\n /|\\    |\n  |     |\n / \\    |\n========",
             // " +-----+\n | |\n [O] |\n /|\\ |\n | |\n / \\ |\n========"
     };
+
+    public Hangman(Action action) {
+        this.action = action;
+    }
 
     private void clearTerminal() {
         System.out.print("\033[H\033[2J");
@@ -185,6 +190,10 @@ public class Hangman {
 
             clearTerminal();
             printTheMan();
+
+            if (this.action == Action.PLAY_HARD) {
+                System.out.println("time remaining: " + String.valueOf(45 - timeTaken) + "s");
+            }
 
             guesses.add(getChar());
         }
